@@ -8,7 +8,7 @@ High-performance User-Agent string generator for Go.
 
 ## Features
 
-- **Real user-agent data** from [Intoli](https://github.com/intoli/user-agents) (~1.6ns, 0 allocs)
+- **Auto-updated browser versions** from [Intoli](https://github.com/intoli/user-agents) real usage data
 - **Zero-alloc bot User-Agents** (~2ns per call)
 - **Fast browser UA generation** (~40ns, 1 alloc)
 - **Seed-based reproducibility** for testing
@@ -114,25 +114,6 @@ fmt.Println(g.Firefox())
 | `ScreamingFrogBot()` | Screaming Frog |
 | `SitebulbBot()` | Sitebulb crawler |
 
-### Real User-Agents (Zero-Allocation)
-
-Real UA strings from actual browser usage data ([Intoli](https://github.com/intoli/user-agents)).
-
-| Function | Description |
-|----------|-------------|
-| `RealChrome()` | Real Chrome UA (random OS) |
-| `RealChromeWindows()` | Real Chrome on Windows |
-| `RealChromeMac()` | Real Chrome on macOS |
-| `RealChromeLinux()` | Real Chrome on Linux |
-| `RealChromeAndroid()` | Real Chrome on Android |
-| `RealFirefox()` | Real Firefox UA |
-| `RealSafari()` | Real Safari on macOS |
-| `RealSafariIOS()` | Real Safari on iPhone |
-| `RealEdge()` | Real Edge UA |
-| `RealRandom()` | Random real UA |
-| `RealRandomDesktop()` | Random real desktop UA |
-| `RealRandomMobile()` | Random real mobile UA |
-
 ### Utilities
 
 | Function | Description |
@@ -148,8 +129,6 @@ Real UA strings from actual browser usage data ([Intoli](https://github.com/into
 Benchmarks on Apple M3 Max:
 
 ```
-BenchmarkRealChromeWindows  708085576    1.605 ns/op    0 B/op    0 allocs/op
-BenchmarkRealRandom          76247358   16.26 ns/op    0 B/op    0 allocs/op
 BenchmarkGooglebot          644734208    1.780 ns/op    0 B/op    0 allocs/op
 BenchmarkChrome              30398343   38.90 ns/op  192 B/op    1 allocs/op
 BenchmarkFirefox             36187087   32.63 ns/op  128 B/op    1 allocs/op
