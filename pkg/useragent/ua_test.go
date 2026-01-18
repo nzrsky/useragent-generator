@@ -249,6 +249,13 @@ func TestPackageLevelFunctions(t *testing.T) {
 	}
 }
 
+func TestRandomBot(t *testing.T) {
+	ua := RandomBot()
+	if ua == "" {
+		t.Error("RandomBot() returned empty string")
+	}
+}
+
 func TestGlobalSeed(t *testing.T) {
 	Seed(99999)
 	ua1 := Chrome()
@@ -263,5 +270,95 @@ func TestGlobalSeed(t *testing.T) {
 	}
 	if ua2 != ua4 {
 		t.Errorf("Seed() didn't reset sequence: expected %q, got %q", ua2, ua4)
+	}
+}
+
+func TestAllDesktopBrowsers(t *testing.T) {
+	g := WithSeed(42)
+	browsers := []struct {
+		name string
+		fn   func() string
+	}{
+		{"ChromeMac", g.ChromeMac},
+		{"ChromeLinux", g.ChromeLinux},
+		{"FirefoxWindows", g.FirefoxWindows},
+		{"FirefoxMac", g.FirefoxMac},
+		{"EdgeWindows", g.EdgeWindows},
+	}
+	for _, b := range browsers {
+		t.Run(b.name, func(t *testing.T) {
+			ua := b.fn()
+			if len(ua) < 50 {
+				t.Errorf("%s() too short: %s", b.name, ua)
+			}
+		})
+	}
+}
+
+func TestAllMobileBrowsersPackage(t *testing.T) {
+	fns := []struct {
+		name string
+		fn   func() string
+	}{
+		{"SafariIPad", SafariIPad},
+		{"ChromeIOS", ChromeIOS},
+		{"AndroidWebView", AndroidWebView},
+		{"FirefoxAndroid", FirefoxAndroid},
+		{"SamsungBrowser", SamsungBrowser},
+		{"EdgeAndroid", EdgeAndroid},
+	}
+	for _, f := range fns {
+		t.Run(f.name, func(t *testing.T) {
+			ua := f.fn()
+			if len(ua) < 50 {
+				t.Errorf("%s() too short: %s", f.name, ua)
+			}
+		})
+	}
+}
+
+func TestAllBots(t *testing.T) {
+	bots := []struct {
+		name     string
+		fn       func() string
+		contains string
+	}{
+		{"BingbotMobile", BingbotMobile, "bingbot"},
+		{"YandexBotMobile", YandexBotMobile, "YandexBot"},
+		{"DuckDuckBot", DuckDuckBot, "DuckDuckBot"},
+		{"SlackBot", SlackBot, "Slackbot"},
+		{"TelegramBot", TelegramBot, "TelegramBot"},
+		{"DiscordBot", DiscordBot, "Discordbot"},
+		{"WhatsAppBot", WhatsAppBot, "WhatsApp"},
+		{"PinterestBot", PinterestBot, "Pinterest"},
+		{"MozBot", MozBot, "DotBot"},
+		{"MajesticBot", MajesticBot, "MJ12bot"},
+		{"ScreamingFrogBot", ScreamingFrogBot, "Screaming Frog"},
+		{"SitebulbBot", SitebulbBot, "Sitebulb"},
+	}
+	for _, b := range bots {
+		t.Run(b.name, func(t *testing.T) {
+			ua := b.fn()
+			if !strings.Contains(ua, b.contains) {
+				t.Errorf("%s() = %q, want contains %q", b.name, ua, b.contains)
+			}
+		})
+	}
+}
+
+func TestNewGenerator(t *testing.T) {
+	g := New()
+	ua := g.Chrome()
+	if len(ua) < 50 {
+		t.Errorf("New().Chrome() too short: %s", ua)
+	}
+}
+
+func TestGeneratorState(t *testing.T) {
+	g := WithSeed(12345)
+	g.Chrome()
+	state := g.State()
+	if state == 12345 {
+		t.Error("State should have changed after generating UA")
 	}
 }

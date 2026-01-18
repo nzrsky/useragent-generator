@@ -1,5 +1,7 @@
 # useragent-generator
 
+[![CI](https://github.com/nzrsky/useragent-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/nzrsky/useragent-generator/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/nzrsky/useragent-generator/graph/badge.svg)](https://codecov.io/gh/nzrsky/useragent-generator)
 [![Go Reference](https://pkg.go.dev/badge/github.com/nzrsky/useragent-generator/pkg/useragent.svg)](https://pkg.go.dev/github.com/nzrsky/useragent-generator/pkg/useragent)
 [![Go Report Card](https://goreportcard.com/badge/github.com/nzrsky/useragent-generator)](https://goreportcard.com/report/github.com/nzrsky/useragent-generator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
